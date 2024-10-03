@@ -6,6 +6,7 @@ from django_filters.rest_framework import (DjangoFilterBackend, FilterSet,
                                            filters)
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import SearchFilter
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import SAFE_METHODS, AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -186,7 +187,7 @@ class IngredientsViewSet(viewsets.ModelViewSet):
     queryset = Ingredients.objects.all()
     serializer_class = IngredientsSerializer
     permission_classes = (IsAdminOrReadOnly,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (SearchFilter,)
     filterset_fields = ('name',)
     search_fields = ('^name',)
 
