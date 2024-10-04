@@ -171,9 +171,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return text
 
     @action(
-        methods=['GET',],
+        methods=['GET', ],
         detail=False,
-        permission_classes=[IsAuthenticated,]
+        permission_classes=[IsAuthenticated, ]
     )
     def download_shopping_cart(self, request):
         user = request.user

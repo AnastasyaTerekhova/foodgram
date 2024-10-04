@@ -99,9 +99,9 @@ class UsersViewSet(views.UserViewSet):
             return Response(status=HTTPStatus.NO_CONTENT)
 
     @action(
-        methods=['GET',],
+        methods=['GET', ],
         detail=False,
-        permission_classes=[IsAuthenticated,]
+        permission_classes=[IsAuthenticated, ]
     )
     def subscriptions(self, request):
         user = request.user
