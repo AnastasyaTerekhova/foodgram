@@ -43,6 +43,15 @@ class RecipeFilter(FilterSet):
         return queryset
 
 
+class IngredientFilter(FilterSet):
+
+    name = filters.CharFilter(lookup_expr="startswith")
+
+    class Meta:
+        model = Ingredients
+        fields = ("name",)
+
+
 class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсет для работы с рецептами."""
 
@@ -188,8 +197,7 @@ class IngredientsViewSet(viewsets.ModelViewSet):
     serializer_class = IngredientsSerializer
     permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (SearchFilter,)
-    filterset_fields = ('name',)
-    search_fields = ('^name',)
+    filterset_class = IngredientFilter
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
