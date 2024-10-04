@@ -4,7 +4,7 @@ from django.db import models
 User = get_user_model()
 
 MAX_LENGTH_EMAIL = 254
-MAX_LENGTH_TEXT = 150
+MAX_LENGTH_TEXT = 1000
 
 
 class Tags(models.Model):
