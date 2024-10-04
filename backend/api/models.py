@@ -4,7 +4,7 @@ from django.db import models
 User = get_user_model()
 
 MAX_LENGTH_EMAIL = 254
-MAX_LENGTH_TEXT = 100000
+MAX_LENGTH_TEXT = 150
 
 
 class Tags(models.Model):
@@ -52,7 +52,7 @@ class Recipe(models.Model):
                             max_length=MAX_LENGTH_TEXT)
     image = models.ImageField('Картинка', blank=True,
                               default=None, upload_to='recipes/images/')
-    text = models.CharField('Описание рецепта', max_length=MAX_LENGTH_TEXT)
+    text = models.CharField('Описание рецепта', max_length=100000)
     ingredients = models.ManyToManyField(Ingredients)
     tags = models.ManyToManyField(Tags, through='TagsRecipe')
     cooking_time = models.CharField('Время приготовления', max_length=30)
