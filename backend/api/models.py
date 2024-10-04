@@ -13,6 +13,10 @@ class Tags(models.Model):
     name = models.CharField('Название тега', max_length=30)
     slug = models.SlugField('Слаг для тегов', max_length=50, unique=True)
 
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
     def __str__(self):
         return self.name
 
@@ -28,6 +32,11 @@ class Ingredients(models.Model):
         max_length=50,
         blank=True
     )
+
+    class Meta:
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
+        ordering = ['name',]
 
     def __str__(self):
         return self.name
@@ -51,7 +60,7 @@ class Recipe(models.Model):
                                       verbose_name='Дата публикации')
 
     class Meta:
-        ordering = ('-created_at',)
+        ordering = ['name', 'author']
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
 
@@ -106,6 +115,7 @@ class Favorite(UserRecipeModel):
     class Meta(UserRecipeModel.Meta):
         default_related_name = 'favorites'
         verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранные'
 
     def __str__(self):
         return (
@@ -118,7 +128,8 @@ class ShoppingCart(UserRecipeModel):
 
     class Meta(UserRecipeModel.Meta):
         default_related_name = 'shopping_cart'
-        verbose_name = 'Избранное'
+        verbose_name = 'Список покупок'
+        verbose_name_plural = 'Списки покупок'
 
     def __str__(self):
         return (
