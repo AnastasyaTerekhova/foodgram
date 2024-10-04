@@ -56,7 +56,8 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(Ingredients,
                                          verbose_name='Ингредиенты',
                                          through='IngredientsRecipe')
-    tags = models.ManyToManyField(Tags, verbose_name='Теги')
+    tags = models.ManyToManyField(Tags, verbose_name='Теги',
+                                  through='TagsRecipe')
     cooking_time = models.CharField('Время приготовления', max_length=30)
     created_at = models.DateTimeField(auto_now_add=True,
                                       verbose_name='Дата публикации')
