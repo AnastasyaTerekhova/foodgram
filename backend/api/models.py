@@ -53,8 +53,10 @@ class Recipe(models.Model):
     image = models.ImageField('Картинка', blank=True,
                               default=None, upload_to='recipes/images/')
     text = models.CharField('Описание рецепта', max_length=100000)
-    ingredients = models.ManyToManyField(Ingredients)
-    tags = models.ManyToManyField(Tags, through='TagsRecipe')
+    ingredients = models.ManyToManyField(Ingredients,
+                                         verbose_name='Ингредиенты',
+                                         through='IngredientsRecipe')
+    tags = models.ManyToManyField(Tags, verbose_name='Теги')
     cooking_time = models.CharField('Время приготовления', max_length=30)
     created_at = models.DateTimeField(auto_now_add=True,
                                       verbose_name='Дата публикации')
