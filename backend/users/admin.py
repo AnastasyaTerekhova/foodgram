@@ -20,7 +20,7 @@ class UserAdmin(BaseAdmin):
     )
     search_fields = ('username', 'email',)
     list_filter = ('username', 'email',)
-    ordering = ('username',)
+    ordering = ('username', )
 
 
 @admin.register(Follow)
@@ -29,6 +29,7 @@ class FollowAdmin(BaseAdmin):
         'user',
         'following',
     )
+    list_display_links = ('user', 'following')
     search_fields = ('user__username', 'following__username',)
     list_filter = ('user', 'following',)
-    ordering = ('user',)
+    ordering = ('user', )

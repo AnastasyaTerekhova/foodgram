@@ -31,35 +31,26 @@ class RecipeAdmin(BaseAdmin):
     list_display = (
         'name',
         'author',
-        'text',
         'cooking_time',
         'created_at',
-        'favorites_count',
-        'display_ingredients'
     )
-    search_fields = ('name', 'author__username', 'favorites_count')
+    list_display_links = ('author', )
+    search_fields = ('name', 'author__username')
     list_filter = ('author', 'name', 'tags')
     inlines = (IngredientInRecipeInline,)
-
-    @admin.display(description="Число добавлений в избранное")
-    def favorites_count(self, obj):
-        return obj.favorites.count()
-
-    @admin.display(description="Отображение ингредиентов")
-    def display_ingredients(self, recipe):
-        return ', '.join([
-            ingredients.name for ingredients in recipe.ingredients.all()])
 
 
 @admin.register(ShoppingCart)
 class ShoppingCartAdmin(BaseAdmin):
     list_display = ('user', 'recipe')
+    list_display_links = ('user', 'recipe')
     list_filter = ('user', 'recipe')
-    search_fields = ('user',)
+    search_fields = ('user', )
 
 
 @admin.register(Favorite)
 class FavoriteAdmin(BaseAdmin):
     list_display = ('user', 'recipe')
+    list_display_links = ('user', 'recipe')
     list_filter = ('user', 'recipe')
-    search_fields = ('user',)
+    search_fields = ('user', )
