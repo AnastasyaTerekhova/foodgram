@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 
 User = get_user_model()
 
@@ -37,6 +38,11 @@ class Ingredients(models.Model):
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
         ordering = ['name', ]
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'measurement_unit'],
+                                    name='unique ingredient name and '
+                                    'measurement unit')
+        ]
 
     def __str__(self):
         return self.name
@@ -52,13 +58,21 @@ class Recipe(models.Model):
                             max_length=MAX_LENGTH_TEXT)
     image = models.ImageField('Картинка', blank=True,
                               default=None, upload_to='recipes/images/')
-    text = models.CharField('Описание рецепта', max_length=100000)
+    text = models.TextField('Описание рецепта', max_length=100000)
     ingredients = models.ManyToManyField(Ingredients,
                                          verbose_name='Ингредиенты',
                                          through='IngredientsRecipe')
     tags = models.ManyToManyField(Tags, verbose_name='Теги',
                                   through='TagsRecipe')
-    cooking_time = models.CharField('Время приготовления', max_length=30)
+    cooking_time = models.CharField('Время приготовления', max_length=30,
+                                    validators=[
+                                        MinLengthValidator(
+                                            1, 'Время приготовления не может '
+                                            'быть меньше 1 минуты.'
+                                        ),
+                                        MaxLengthValidator(1440, 'Cлишком '
+                                                           'большое значение')
+                                    ])
     created_at = models.DateTimeField(auto_now_add=True,
                                       verbose_name='Дата публикации')
 
@@ -66,6 +80,7 @@ class Recipe(models.Model):
         ordering = ['name', 'author']
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
+        default_related_name = 'recipes'
 
     def __str__(self):
         return self.name
