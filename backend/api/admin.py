@@ -4,8 +4,7 @@ from .models import Favorite, Ingredients, Recipe, ShoppingCart, Tags
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'author', 'is_favorited',
-                    'is_in_shopping_cart')
+    list_display = ('id', 'name', 'author')
     list_display_links = ('id', 'author')
     search_fields = ('name', 'author')
 
